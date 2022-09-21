@@ -21,7 +21,7 @@ public class RaccoonModel extends AnimatedGeoModel <RaccoonEntity> {
 
     @Override
     public Identifier getAnimationResource(RaccoonEntity animatable) {//animation file
-        return new Identifier(Bettermounts.MOD_ID, "animations/raccoon.animations.json");
+        return new Identifier(Bettermounts.MOD_ID, "animations/raccoon.animation.json");
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

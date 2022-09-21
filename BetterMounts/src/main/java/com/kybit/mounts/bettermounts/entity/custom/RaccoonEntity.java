@@ -6,13 +6,18 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -24,8 +29,20 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class RaccoonEntity extends AnimalEntity implements IAnimatable {
+import java.util.UUID;
+
+public class RaccoonEntity extends AnimalEntity implements IAnimatable, Angerable {
+
+    private static final TrackedData<Integer> ANGER_TIME = null;
+    //private static final UniformIntProvider ANGER_TIME_RANGE;
+    @Nullable
+    private UUID angryAt;
     private AnimationFactory factory = new AnimationFactory(this);
+
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(ANGER_TIME, 0);
+    }
 
     public RaccoonEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
@@ -40,7 +57,7 @@ public class RaccoonEntity extends AnimalEntity implements IAnimatable {
     public static DefaultAttributeContainer.Builder setAttributes() { //attributes are very important and needed
         return AnimalEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 20.0D)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0f)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 50.0f)
                 .add(EntityAttributes.GENERIC_ATTACK_SPEED, 2.0f)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f);
     }
@@ -96,4 +113,24 @@ public class RaccoonEntity extends AnimalEntity implements IAnimatable {
         this.playSound(SoundEvents.ENTITY_PIG_STEP, 0.15f, 1.0f);
     }
 
+    public int getAngerTime() {
+        return (Integer)this.dataTracker.get(ANGER_TIME);
+    }
+
+    public void setAngerTime(int angerTime) {
+        this.dataTracker.set(ANGER_TIME, angerTime);
+    }
+
+    public void chooseRandomAngerTime() {
+        this.setAngerTime(TimeHelper.betweenSeconds(10,15).get(random));
+    }
+
+    @Nullable
+    public UUID getAngryAt() {
+        return this.angryAt;
+    }
+
+    public void setAngryAt(@Nullable UUID angryAt) {
+        this.angryAt = angryAt;
+    }
 }

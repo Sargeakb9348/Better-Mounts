@@ -10,6 +10,7 @@ public class ModRegistries {
     }
 
     public static void registerAttributes(){
+        //FabricDefaultAttributeRegistry.register(ModEntities.RACCOON, RaccoonEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.RACCOON, RaccoonEntity.setAttributes());
     }
 
