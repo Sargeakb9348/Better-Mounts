@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "bettermounts",
+  "version": "${version}",
+  "name": "BetterMounts",
+  "description": "Ride a series of new and improved mounts and animals in this mod.",
+  "authors": [
+    "Kybit",
+    "Macncheezy"
+  ],
+  "contact": {
+    "repo": "https://github.com/Sargeakb9348/Better-Mounts.git"
+  },
+  "license": "MIT",
+  "icon": "assets/bettermounts/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.kybit.mounts.bettermounts.client.BettermountsClient"
+    ],
+    "main": [
+      "com.kybit.mounts.bettermounts.Bettermounts"
+    ]
+  },
+  "mixins": [
+    "bettermounts.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
