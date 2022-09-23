@@ -19,7 +19,8 @@ public class ModItems {
     public static void registerModItems() {
         Bettermounts.LOGGER.info("Registering Mod Items for " + Bettermounts.MOD_ID);
     }
+    //EGGS
     public static final Item RACCOON_SPAWN_EGG = registerItem("raccoon_spawn_egg", new SpawnEggItem(ModEntities.RACCOON,0x948e8d, 0x3b3635, new FabricItemSettings().group(ItemGroup.MISC).maxCount(1)));
-
+    public static final Item WOLF_SPAWN_EGG = registerItem("wolf_spawn_egg", new SpawnEggItem(ModEntities.WOLF, 0x4a565a, 0xDCB980, new FabricItemSettings().group(ItemGroup.MISC).maxCount(1)));
 
 }
