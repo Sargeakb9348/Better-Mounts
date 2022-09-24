@@ -1,5 +1,6 @@
 package com.kybit.mounts.bettermounts.entity.custom;
 
+import com.kybit.mounts.bettermounts.entity.AbstractMount;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
@@ -13,6 +14,7 @@ import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -33,7 +35,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.UUID;
 
-public class WolfEntity extends AnimalEntity implements IAnimatable{ //implements Angerable
+public class WolfEntity extends AbstractMount implements IAnimatable{ //implements Angerable
 
    // private static final TrackedData<Integer> ANGER_TIME;
     //private static final UniformIntProvider ANGER_TIME_RANGE;
@@ -51,6 +53,11 @@ public class WolfEntity extends AnimalEntity implements IAnimatable{ //implement
 //    }
     public WolfEntity(EntityType<? extends AnimalEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    protected boolean receiveFood(PlayerEntity player, ItemStack item) {
+        return false;
     }
 
     @Nullable
@@ -117,6 +124,10 @@ public class WolfEntity extends AnimalEntity implements IAnimatable{ //implement
     protected void playStepSound(BlockPos pos, BlockState state) {
         this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.15f, 1.0f);
     }
+
+    //make it follow the owner at some point
+
+
 
 ////    public int getAngerTime() {
 ////        return (Integer)this.dataTracker.get(ANGER_TIME);
