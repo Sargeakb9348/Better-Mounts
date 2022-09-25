@@ -227,6 +227,7 @@ public abstract class AbstractMount extends AnimalEntity implements JumpingMount
     protected void putPlayerOnBack(PlayerEntity player) {
 //        this.setEatingGrass(false);
 //        this.setAngry(false);
+        //Bettermounts.logger.info("test1");
         if (!this.world.isClient) {
             player.setYaw(this.getYaw());
             player.setPitch(this.getPitch());
