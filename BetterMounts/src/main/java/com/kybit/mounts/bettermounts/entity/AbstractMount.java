@@ -253,10 +253,10 @@ public abstract class AbstractMount extends AnimalEntity implements JumpingMount
                     //this.soundTicks = 0;
                 }
 
-                if (this.onGround && this.MOUNT_JUMP_STRENGTH == 0.0F && !this.jumping) {
+                /*if (this.onGround && this.MOUNT_JUMP_STRENGTH == 0.0F && !this.jumping) {
                     f = 0.0F;
                     g = 0.0F;
-                }
+                }*/
 
                 if (this.MOUNT_JUMP_STRENGTH > 0.0F && !this.isInAir() && this.onGround) {
                     double d = this.getJumpStrength() * (double)this.MOUNT_JUMP_STRENGTH * (double)this.getJumpVelocityMultiplier();
@@ -362,13 +362,13 @@ public abstract class AbstractMount extends AnimalEntity implements JumpingMount
 
     @Nullable
     public LivingEntity getPrimaryPassenger() {
-        if (this.isSaddled()) {
+        //if (this.isSaddled()) {
             Entity var2 = this.getFirstPassenger();
             if (var2 instanceof LivingEntity) {
                 LivingEntity livingEntity = (LivingEntity)var2;
                 return livingEntity;
             }
-        }
+        //}
 
         return null;
     }
