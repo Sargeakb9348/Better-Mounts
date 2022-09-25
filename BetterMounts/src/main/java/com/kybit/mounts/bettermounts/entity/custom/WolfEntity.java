@@ -1,5 +1,6 @@
 package com.kybit.mounts.bettermounts.entity.custom;
 
+import com.kybit.mounts.bettermounts.Bettermounts;
 import com.kybit.mounts.bettermounts.entity.AbstractMount;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -15,10 +16,13 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Hand;
 import net.minecraft.util.TimeHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -98,6 +102,17 @@ public class WolfEntity extends AbstractMount implements IAnimatable{ //implemen
                 0, this::predicate));
     }
 
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack itemStack = player.getStackInHand(hand);
+        if (!this.isBaby()) {
+            if (this.hasPassengers()) {
+                return super.interactMob(player, hand);
+            }
+        }
+
+        this.putPlayerOnBack(player);
+        return ActionResult.success(this.world.isClient);
+    }
 
     @Override
     public AnimationFactory getFactory() {
