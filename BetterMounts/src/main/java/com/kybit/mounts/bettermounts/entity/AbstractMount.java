@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 import com.google.common.collect.UnmodifiableIterator;
+import com.kybit.mounts.bettermounts.Bettermounts;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -157,77 +158,16 @@ public abstract class AbstractMount extends AnimalEntity implements JumpingMount
         }
     }
 
-    protected abstract boolean receiveFood(PlayerEntity player, ItemStack item);// What this abstract method looks like for horses v
-
-//    boolean bl = false;
-//    float f = 0.0F;
-//    int i = 0;
-//    int j = 0;
-//        if (item.isOf(Items.WHEAT)) {
-//        f = 2.0F;
-//        i = 20;
-//        j = 3;
-//    } else if (item.isOf(Items.SUGAR)) {
-//        f = 1.0F;
-//        i = 30;
-//        j = 3;
-//    } else if (item.isOf(Blocks.HAY_BLOCK.asItem())) {
-//        f = 20.0F;
-//        i = 180;
-//    } else if (item.isOf(Items.APPLE)) {
-//        f = 3.0F;
-//        i = 60;
-//        j = 3;
-//    } else if (item.isOf(Items.GOLDEN_CARROT)) {
-//        f = 4.0F;
-//        i = 60;
-//        j = 5;
-//        if (!this.world.isClient && this.isTame() && this.getBreedingAge() == 0 && !this.isInLove()) {
-//            bl = true;
-//            this.lovePlayer(player);
-//        }
-//    } else if (item.isOf(Items.GOLDEN_APPLE) || item.isOf(Items.ENCHANTED_GOLDEN_APPLE)) {
-//        f = 10.0F;
-//        i = 240;
-//        j = 10;
-//        if (!this.world.isClient && this.isTame() && this.getBreedingAge() == 0 && !this.isInLove()) {
-//            bl = true;
-//            this.lovePlayer(player);
-//        }
-//    }
-//
-//        if (this.getHealth() < this.getMaxHealth() && f > 0.0F) {
-//        this.heal(f);
-//        bl = true;
-//    }
-//
-//        if (this.isBaby() && i > 0) {
-//        this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-//        if (!this.world.isClient) {
-//            this.growUp(i);
-//        }
-//
-//        bl = true;
-//    }
-//
-//        if (j > 0 && (bl || !this.isTame()) && this.getTemper() < this.getMaxTemper()) {
-//        bl = true;
-//        if (!this.world.isClient) {
-//            this.addTemper(j);
-//        }
-//    }
-//
-//        if (bl) {
-//        this.playEatingAnimation();
-//        this.emitGameEvent(GameEvent.EAT);
-//    }
-//
-//        return bl;
+    /**
+     * Look to AbstractHorseEntity.receiveFood for reference
+     * @param player
+     * @param item
+     * @return
+     * @see net.minecraft.entity.passive.AbstractHorseEntity
+     */
+    protected abstract boolean receiveFood(PlayerEntity player, ItemStack item);
 
     protected void putPlayerOnBack(PlayerEntity player) {
-//        this.setEatingGrass(false);
-//        this.setAngry(false);
-        //Bettermounts.logger.info("test1");
         if (!this.world.isClient) {
             player.setYaw(this.getYaw());
             player.setPitch(this.getPitch());
@@ -253,11 +193,7 @@ public abstract class AbstractMount extends AnimalEntity implements JumpingMount
                     //this.soundTicks = 0;
                 }
 
-                /*if (this.onGround && this.MOUNT_JUMP_STRENGTH == 0.0F && !this.jumping) {
-                    f = 0.0F;
-                    g = 0.0F;
-                }*/
-
+                Bettermounts.LOGGER.info(this.MOUNT_JUMP_STRENGTH + " " + this.isInAir() + " " + this.onGround);
                 if (this.MOUNT_JUMP_STRENGTH > 0.0F && !this.isInAir() && this.onGround) {
                     double d = this.getJumpStrength() * (double)this.MOUNT_JUMP_STRENGTH * (double)this.getJumpVelocityMultiplier();
                     double e = d + this.getJumpBoostVelocityModifier();
@@ -296,13 +232,13 @@ public abstract class AbstractMount extends AnimalEntity implements JumpingMount
         }
     }
 
-    public float getJumpStrength() {
-        return MOUNT_JUMP_STRENGTH;
+    public double getJumpStrength() {
+        return this.getAttributeValue(EntityAttributes.HORSE_JUMP_STRENGTH);
     }
 
     @Override
     public void setJumpStrength(int strength) {
-        if (this.isSaddled()) {
+        //if (this.isSaddled()) {
             if (strength < 0) {
                 strength = 0;
             } else {
@@ -316,12 +252,12 @@ public abstract class AbstractMount extends AnimalEntity implements JumpingMount
                 this.MOUNT_JUMP_STRENGTH = 0.4F + 0.4F * (float)strength / 90.0F;
             }
 
-        }
+        //}
     }
 
     @Override
     public boolean canJump() {
-        return this.isSaddled();
+        return true;
     }
 
     @Override
